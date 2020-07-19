@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="15dp"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".LoginActvity">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -15,6 +15,7 @@
         android:text="이메일"/>
 
     <EditText
+        android:id="@+id/emailEdt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -40,4 +41,23 @@
         android:layout_height="wrap_content"
         android:text="비밀번호를 입력해주세요."/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="닉네임"/>
+
+    <EditText
+        android:id="@+id/nickEdt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:hint="사용할 닉네임 입력"
+        android:singleLine="true"/>
+
+    <Button
+        android:id="@+id/okBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="가입하기"/>
 </LinearLayout>
