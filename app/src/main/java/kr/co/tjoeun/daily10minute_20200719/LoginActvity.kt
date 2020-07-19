@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login.*
+import kr.co.tjoeun.daily10minute_20200719.utils.ContextUtil
 import kr.co.tjoeun.daily10minute_20200719.utils.ServerUtil
 import org.json.JSONObject
 
@@ -48,9 +49,10 @@ class LoginActvity : BaseActivity() {
                         val token = data.getString("token")
 
                         //로그인 사용자의 토큰값 추출
-
-
-
+                        ContextUtil.setLoginUserToken(mContext, token)
+                        val myIntent = Intent(mContext, MainActvity::class.java)
+                        startActivity(myIntent)
+                        finish()
                     }
                     else
                     {
