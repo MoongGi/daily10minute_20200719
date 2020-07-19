@@ -42,6 +42,15 @@ class LoginActvity : BaseActivity() {
                     if (codeNum == 200)
                     {
                         //로그인 성공
+                        //data로 이름 붙은 {} 를 우선 추출
+                        val data = json.getJSONObject("data")
+                        //data{} 내부에서 token String 추출
+                        val token = data.getString("token")
+
+                        //로그인 사용자의 토큰값 추출
+
+
+
                     }
                     else
                     {
