@@ -1,18 +1,17 @@
 package kr.co.tjoeun.daily10minute_20200719
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_login.*
 import kr.co.tjoeun.daily10minute_20200719.utils.ServerUtil
 import org.json.JSONObject
 
-class MainActivity : BaseActivity() {
+class LoginActvity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_login)
         setValues()
         setupEvents()
     }
@@ -40,9 +39,12 @@ class MainActivity : BaseActivity() {
                     }
                     else
                     {
+                        //로그인 실패 사유를 서버가 알려주는 message에 출력
+                        val fileReason = json.getString("message")
+
                         //서버 통신중에 UI에 영향을 주려면 runOnUIThread 를 활용하자
                         runOnUiThread {
-                            Toast.makeText(mContext, "로그인실패", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(mContext, "로그인실패 : ${fileReason}", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
