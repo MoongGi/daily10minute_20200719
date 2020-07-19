@@ -1,5 +1,6 @@
 package kr.co.tjoeun.daily10minute_20200719
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login.*
@@ -17,6 +18,11 @@ class LoginActvity : BaseActivity() {
     }
 
     override fun setValues() {
+
+        signUpBtn.setOnClickListener {
+            val myIntent = Intent(mContext, SignUpActvity::class.java)
+            startActivity(myIntent)
+        }
 
         loginBtn.setOnClickListener {
             // 입력한 아이디 & 비번 받아오기
