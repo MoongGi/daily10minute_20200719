@@ -30,13 +30,60 @@ class ServerUtil
             //서버에 실제로 전달할 데이터를 폼바디에 담아주자. (POST - 폼 데이터)
             val formData = FormBody.Builder()
                 .add("email", email)
-                .add("pw", pw)
+                .add("password", pw)
                 .build()
 
             //서버에 요청할 모든 정보를 담아주는 request 변수 생성
             val request = Request.Builder()
                 .url(urlString)
                 .post(formData)
+                //.header() API헤더 정보 필요할경우 첨부
+                .build()
+
+            //완성한 Request를 가지고 실제로 서버로 출발
+            //서버는 request를 받으면 => Response를 내려줌.
+            //그에 대한 처리도 필요함
+            client.newCall(request).enqueue(object : Callback
+            {
+                override fun onFailure(call: Call, e: IOException)
+                {
+                    //서버에 연결 자체를 실패한 경우
+                }
+
+                override fun onResponse(call: Call, response: Response)
+                {
+                    //서버에 연결 성공 했을 경우
+                    val bodyString = response.body!!.string()
+
+                    //String을 => 분석하기 쉬운 Json 클래스로 변환.
+                    val json = JSONObject(bodyString)
+                    Log.d("서버응답", json.toString())
+
+                    //완성된 json을 액티비티에서 처리하도록 전달
+                    handler?.onResponse(json)
+                }
+            })
+        }
+
+        //회원가입 요청
+        fun putRequsetSignUp(context:Context, email:String, pw:String, nickName:String, handler: JsonResponseHandler?)
+        {
+            val client = OkHttpClient()
+
+            //어떤 주소로 가야하는지 URL 을 후스트 주소 + 기능주소의 결합
+            val urlString = "${BASE_URL}/user"
+
+            //서버에 실제로 전달할 데이터를 폼바디에 담아주자. (POST - 폼 데이터)
+            val formData = FormBody.Builder()
+                .add("email", email)
+                .add("password", pw)
+                .add("nick_name", nickName)
+                .build()
+
+            //서버에 요청할 모든 정보를 담아주는 request 변수 생성
+            val request = Request.Builder()
+                .url(urlString)
+                .put(formData)
                 //.header() API헤더 정보 필요할경우 첨부
                 .build()
 

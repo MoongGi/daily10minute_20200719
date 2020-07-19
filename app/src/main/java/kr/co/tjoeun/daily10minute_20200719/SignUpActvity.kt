@@ -7,6 +7,9 @@ import android.text.TextWatcher
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import kotlinx.android.synthetic.main.activity_sign_up_actvity.*
+import kr.co.tjoeun.daily10minute_20200719.utils.ServerUtil
+import org.json.JSONObject
+import java.util.*
 
 class SignUpActvity : BaseActivity() {
 
@@ -81,6 +84,30 @@ class SignUpActvity : BaseActivity() {
 
             //이메일 / 비번 / 닉네임 검사를 모두 통과한 상황
             //서버에 실제로 가입 신청
+            ServerUtil.putRequsetSignUp(mContext, inputEmail, inputPw, inputNickName, object : ServerUtil.JsonResponseHandler{
+                override fun onResponse(json: JSONObject) {
+                    // 서버가 알려주는 코드값이 200이면 가입 성공처리
+                    // 아니라면 가입 실패처ㅣ
+
+                    val code = json.getInt("code")
+                    if (code == 200)
+                    {
+                        runOnUiThread {
+                            Toast.makeText(mContext,"회원가입 성공",Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
+                    }
+                    else
+                    {
+                        // 가입 실패 상황 => 왜 실패했는지 출력
+                        val message = json.getString("message")
+                        runOnUiThread {
+                            Toast.makeText(mContext, "회원가입 실패 :${message}", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    }
+                }
+            })
 
         }
 
