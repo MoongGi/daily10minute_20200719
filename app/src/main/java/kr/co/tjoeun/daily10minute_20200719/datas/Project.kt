@@ -9,6 +9,8 @@ class Project
     var title = ""
     var imageUrl = ""
     var description = ""
+    var completeDays = ""
+    var proofMethod = ""
 
     companion object
     {
@@ -17,11 +19,12 @@ class Project
             val p = Project()
 
             // json에 들어 있는 데이터들을 이용해서 => p의 데이터로 대입
-
             p.id = json.getInt("id")
             p.title = json.getString("title")
             p.imageUrl = json.getString("img_url")
             p.description = json.getString("description")
+            p.completeDays = json.getString("ongoing_users_count")
+            p.proofMethod = json.getString("proof_method")
 
            return p
         }
