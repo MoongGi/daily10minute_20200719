@@ -2,6 +2,8 @@ package kr.co.tjoeun.daily10minute_20200719
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import kotlinx.android.synthetic.main.activity_main.*
+import kr.co.tjoeun.daily10minute_20200719.apdaters.ProjectApdaters
 import kr.co.tjoeun.daily10minute_20200719.datas.Project
 import kr.co.tjoeun.daily10minute_20200719.utils.ServerUtil
 import org.json.JSONObject
@@ -9,6 +11,8 @@ import org.json.JSONObject
 class MainActvity : BaseActivity() {
 
     val mProjectList = ArrayList<Project>()
+
+    lateinit var mProjectAdapter : ProjectApdaters
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +26,13 @@ class MainActvity : BaseActivity() {
 
     override fun setupEvents() {
         //TODO("Not yet implemented")
+
+        // 서버에서 받아오는 기능 실행
+        getProjectListFromServer()
+
+        //서버에서 받아오고 난후에 어댑터 연결
+        mProjectAdapter = ProjectApdaters(mContext, R.layout.project_list_view, mProjectList)
+        projcetListView.adapter = mProjectAdapter
     }
 
     //서버에서 프로젝트 목록 가져오는 함수작성
