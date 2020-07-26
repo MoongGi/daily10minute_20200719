@@ -23,7 +23,13 @@ class Users
             u.id = json.getInt("id")
             u.email = json.getString("email")
             u.nickName = json.getString("nick_name")
-            u.projectDays = json.getInt("project_days")
+
+            //nullchk
+            //projectDay는 특정 상황에서만 표시
+            if (!json.isNull("project_days"))
+            {
+                u.projectDays = json.getInt("project_days")
+            }
 
             //  사용자가 가지고 있는 프사 목록 채우기
             val profile_images = json.getJSONArray("profile_images")

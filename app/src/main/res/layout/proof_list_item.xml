@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/proofTitleImg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:civ_border_width="2dp"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:id="@+id/proofNickNameTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="작성자 닉네임"
+            android:layout_marginLeft="5dp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/proofTimeTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="작성 일시 자리"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/proofContentTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인증 게시글 내용"
+            android:layout_marginTop="10dp"/>
+
+        <ImageView
+            android:id="@+id/proofContentImg"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:src="@mipmap/ic_launcher"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/likeBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:layout_weight="1"
+                android:text="좋아요 0개"/>
+
+            <Button
+                android:id="@+id/replyBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:text="답글달기"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>
