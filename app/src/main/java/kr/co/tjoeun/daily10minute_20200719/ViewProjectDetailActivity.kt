@@ -1,9 +1,15 @@
 package kr.co.tjoeun.daily10minute_20200719
 
+import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_view_project_detail.*
+import kr.co.tjoeun.daily10minute_20200719.apdaters.ProjectApdaters
 import kr.co.tjoeun.daily10minute_20200719.datas.Project
 import kr.co.tjoeun.daily10minute_20200719.utils.ServerUtil
 import org.json.JSONObject
@@ -19,15 +25,58 @@ class ViewProjectDetailActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_project_detail)
         setupEvents()
+        setValues()
     }
 
     override fun setValues() {
+        mProjectId = intent.getIntExtra("projectId", 0)
+        getProjectDetailFromServer()
 
     }
 
     override fun setupEvents() {
-        mProjectId = intent.getIntExtra("projectId", 0)
-        getProjectDetailFromServer()
+        // 프로젝트 별 참여 명부 화면으로 이동 => 명단 확인
+        viewOngoingUserBtn.setOnClickListener {
+            val myIntnet = Intent(mContext, ViewOngoingUserActivity::class.java)
+            myIntnet.putExtra("projectId", mProjectId)
+            startActivity(myIntnet)
+        }
+
+        joinProjectBtn.setOnClickListener {
+            val alert = AlertDialog.Builder(mContext)
+                .setTitle("프로젝트 참여 신청")
+                .setMessage("정말 프로젝트에 참여 하시겠습니까?")
+                .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+                    //실제 서버 참여하기
+                    ServerUtil.postRequestProjectJoin(mContext, mProjectId, object : ServerUtil.JsonResponseHandler{
+                        override fun onResponse(json: JSONObject) {
+                            val code = json.getInt("code")
+
+                            if (code == 200)
+                            {
+                                val data = json.getJSONObject("data")
+                                val projectObj = data.getJSONObject("project")
+
+//                        갱신된 프로젝트 정보를 새로 대입
+                                mProject = Project.getProjectFromJson(projectObj)
+
+//                        별도 기능으로 만들어진 Ui 데이터 세팅 기능 실행
+                                setProjectDataToUI()
+                            }
+                            else {
+                                val message = json.getString("message")
+
+                                runOnUiThread {
+                                    Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+                                }
+
+                            }
+                        }
+                    })
+                })
+                .setNegativeButton("아니요", null)
+                .show()
+        }
     }
 
     fun getProjectDetailFromServer()
@@ -41,17 +90,23 @@ class ViewProjectDetailActivity : BaseActivity() {
                     // project
                     mProject = Project.getProjectFromJson(projectObj)
 
-                    // 프로젝트 정보 화면 반영 (UI)
-                    runOnUiThread {
-                        Glide.with(mContext).load(mProject.imageUrl).into(projectImg)
-                        projectTitleTxt.text = mProject.title
-                        projectDescrptionTxt.text = mProject.description
-                        projectCompleteTxt.text = "${mProject.completeDays}명 도전 진행중"
-                        projectAuthTxt.text = mProject.proofMethod
-
-                    }
+                    setProjectDataToUI()
                 }
 
             })
+    }
+
+    // mProject에 세팅된 데이터를 화면에 반영하는 기능 별도 분리
+    fun setProjectDataToUI()
+    {
+        // 프로젝트 정보 화면 반영 (UI)
+        runOnUiThread {
+            Glide.with(mContext).load(mProject.imageUrl).into(projectImg)
+            projectTitleTxt.text = mProject.title
+            projectDescrptionTxt.text = mProject.description
+            projectCompleteTxt.text = "${mProject.completeDays}명 도전 진행중"
+            projectAuthTxt.text = mProject.proofMethod
+
+        }
     }
 }

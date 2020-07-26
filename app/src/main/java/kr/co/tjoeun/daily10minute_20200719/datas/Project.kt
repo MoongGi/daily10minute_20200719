@@ -11,6 +11,7 @@ class Project
     var description = ""
     var completeDays = ""
     var proofMethod = ""
+    var ongoingUserCount = 0
 
     companion object
     {
@@ -24,7 +25,6 @@ class Project
             p.imageUrl = json.getString("img_url")
             p.description = json.getString("description")
             p.completeDays = json.getString("ongoing_users_count")
-            p.proofMethod = json.getString("proof_method")
 
            return p
         }
