@@ -11,7 +11,9 @@ class Project
     var description = ""
     var completeDays = ""
     var proofMethod = ""
-    var ongoingUserCount = 0
+
+    // 내 진행 상태를 표시하는 변수 : null => 신청 혹은 참가하지 않은 상태
+    var myLastStatus : String? = null
 
     companion object
     {
@@ -25,6 +27,13 @@ class Project
             p.imageUrl = json.getString("img_url")
             p.description = json.getString("description")
             p.completeDays = json.getString("ongoing_users_count")
+
+            // 내 진행상태는 null이 아닐때만 파싱하자.
+            if (!json.isNull("my_last_status"))
+            {
+                // 파싱 진행
+                p.myLastStatus = json.getString("my_last_status")
+            }
 
            return p
         }

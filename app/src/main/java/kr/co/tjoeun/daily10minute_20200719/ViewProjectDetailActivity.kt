@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
@@ -62,6 +63,13 @@ class ViewProjectDetailActivity : BaseActivity() {
 
 //                        별도 기능으로 만들어진 Ui 데이터 세팅 기능 실행
                                 setProjectDataToUI()
+
+                                //서버가 최신 정보가 못내려줌 => 강제로 다시 불러오자. (임시방편)
+                                getProjectDetailFromServer()
+
+                                runOnUiThread {
+                                    Toast.makeText(mContext, "프로젝트에 참여 완료 했습니다.", Toast.LENGTH_SHORT).show()
+                                }
                             }
                             else {
                                 val message = json.getString("message")
@@ -106,6 +114,20 @@ class ViewProjectDetailActivity : BaseActivity() {
             projectDescrptionTxt.text = mProject.description
             projectCompleteTxt.text = "${mProject.completeDays}명 도전 진행중"
             projectAuthTxt.text = mProject.proofMethod
+
+            // 참여 중인지 아닌지 확인후 보여지는 버튼이 다르게 하자.
+
+            if (mProject.myLastStatus == "ONGOING")
+            {
+                // 참여중 버튼들 표시, 참가 버튼 숨기기
+                onGogingButtonLayout.visibility = View.VISIBLE
+                joinProjectBtn.visibility = View.GONE
+            }
+            else
+            {
+                onGogingButtonLayout.visibility = View.GONE
+                joinProjectBtn.visibility = View.VISIBLE
+            }
 
         }
     }

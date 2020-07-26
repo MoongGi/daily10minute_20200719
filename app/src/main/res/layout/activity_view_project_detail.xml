@@ -124,7 +124,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="참여 하기 보기"/>
+        android:text="나도 참여하기"/>
+
+    <LinearLayout
+        android:id="@+id/onGogingButtonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="오늘의 참여 인증하기"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="다른 사람들의 인증 보러 가기"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="중도 포기 하기"/>
+    </LinearLayout>
 
 
 </LinearLayout>
