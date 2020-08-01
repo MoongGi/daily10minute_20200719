@@ -70,6 +70,8 @@
                 android:layout_height="wrap_content"
                 android:focusable="false"
                 android:layout_weight="1"
+                android:background="@drawable/gray_border_box"
+                android:layout_marginRight="10dp"
                 android:text="좋아요 0개"/>
 
             <Button
@@ -78,6 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:focusable="false"
+                android:background="@drawable/gray_border_box"
                 android:text="답글달기"/>
 
         </LinearLayout>

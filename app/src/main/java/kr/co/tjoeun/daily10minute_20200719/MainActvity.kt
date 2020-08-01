@@ -1,11 +1,10 @@
 package kr.co.tjoeun.daily10minute_20200719
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
-import kr.co.tjoeun.daily10minute_20200719.apdaters.ProjectApdaters
+import kr.co.tjoeun.daily10minute_20200719.apdaters.ProjectApdater
 import kr.co.tjoeun.daily10minute_20200719.datas.Project
 import kr.co.tjoeun.daily10minute_20200719.utils.ServerUtil
 import org.json.JSONObject
@@ -14,7 +13,7 @@ class MainActvity : BaseActivity() {
 
     val mProjectList = ArrayList<Project>()
 
-    lateinit var mProjectAdapter : ProjectApdaters
+    lateinit var mProjectAdapter : ProjectApdater
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +27,7 @@ class MainActvity : BaseActivity() {
         getProjectListFromServer()
 
         //서버에서 받아오고 난후에 어댑터 연결
-        mProjectAdapter = ProjectApdaters(mContext, R.layout.project_list_view, mProjectList)
+        mProjectAdapter = ProjectApdater(mContext, R.layout.project_list_view, mProjectList)
         projcetListView.adapter = mProjectAdapter
     }
 
@@ -48,6 +47,8 @@ class MainActvity : BaseActivity() {
     {
         ServerUtil.getRequestProjectList(mContext, object : ServerUtil.JsonResponseHandler{
             override fun onResponse(json: JSONObject) {
+
+                Log.d("프로젝트","@ : ${json.toString()}")
 
                 val data = json.getJSONObject("data")
                 val projects = data.getJSONArray("projects")

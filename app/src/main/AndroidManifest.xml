@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ViewProjectProofListActivity"></activity>
+        <activity android:name=".EditProjectProofActivity"></activity>
+        <activity android:name=".EditProofActivity" />
+        <activity android:name=".ViewProofDetailActvitiy" />
+        <activity android:name=".ViewProjectProofListActivity" />
         <activity android:name=".ViewOngoingUserActivity" />
         <activity android:name=".ViewProjectDetailActivity" />
         <activity android:name=".LoginActvity" />

@@ -13,7 +13,7 @@ import kr.co.tjoeun.daily10minute_20200719.datas.Project
 import kr.co.tjoeun.daily10minute_20200719.datas.Users
 
 
-class UsersApdaters (val mContext: Context, resId: Int, val mList: List<Users>)
+class UsersApdater (val mContext: Context, resId: Int, val mList: List<Users>)
     : ArrayAdapter<Users>(mContext, resId, mList)
 {
     val inf = LayoutInflater.from(mContext)

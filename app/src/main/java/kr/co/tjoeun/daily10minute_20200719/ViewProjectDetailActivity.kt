@@ -2,15 +2,12 @@ package kr.co.tjoeun.daily10minute_20200719
 
 import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_view_project_detail.*
-import kr.co.tjoeun.daily10minute_20200719.apdaters.ProjectApdaters
 import kr.co.tjoeun.daily10minute_20200719.datas.Project
 import kr.co.tjoeun.daily10minute_20200719.utils.ServerUtil
 import org.json.JSONObject
@@ -36,6 +33,15 @@ class ViewProjectDetailActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+
+        // 인증 등록하기
+        uploadProofBtn.setOnClickListener {
+            val myIntnet = Intent(mContext, EditProjectProofActivity::class.java)
+            myIntnet.putExtra("title", mProject.title)
+            myIntnet.putExtra("projectId", mProjectId)
+            startActivity(myIntnet)
+        }
+
         // 다른 사람들의 참여 인증 확인하는 버튼
         viewOtherProofBtn.setOnClickListener {
             // 인증 확인 화면 진입 => 어떤 프로젝트에 대해서 인지 id 값만 전달
@@ -120,7 +126,7 @@ class ViewProjectDetailActivity : BaseActivity() {
             Glide.with(mContext).load(mProject.imageUrl).into(projectImg)
             projectTitleTxt.text = mProject.title
             projectDescrptionTxt.text = mProject.description
-            projectCompleteTxt.text = "${mProject.completeDays}명 도전 진행중"
+            projectCompleteTxt.text = "${mProject.onGoingUserCount}명 도전 진행중"
             projectAuthTxt.text = mProject.proofMethod
 
             // 참여 중인지 아닌지 확인후 보여지는 버튼이 다르게 하자.
@@ -130,11 +136,24 @@ class ViewProjectDetailActivity : BaseActivity() {
                 // 참여중 버튼들 표시, 참가 버튼 숨기기
                 onGogingButtonLayout.visibility = View.VISIBLE
                 joinProjectBtn.visibility = View.GONE
+
+                // 진행률 레이아웃 표시
+                progressLayout.visibility = View.VISIBLE
+
+                val progress = mProject.proofCount.toDouble() / mProject.completeDays.toDouble() * 100
+
+//                계산된 진행률을 소수점 2자리만 표기하는 String으로 변경
+                val progressStr = "%.2f".format(progress)
+                progressTxt.text = "${progressStr}% (${mProject.proofCount}/${mProject.completeDays})"
+
             }
             else
             {
                 onGogingButtonLayout.visibility = View.GONE
                 joinProjectBtn.visibility = View.VISIBLE
+
+                // 진행률 레이아웃 숨기기
+                progressLayout.visibility = View.GONE
             }
 
         }

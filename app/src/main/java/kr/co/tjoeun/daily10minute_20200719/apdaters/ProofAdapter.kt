@@ -1,6 +1,7 @@
 package kr.co.tjoeun.daily10minute_20200719.apdaters
 
 import android.content.Context
+import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.bumptech.glide.Glide
 import kr.co.tjoeun.daily10minute_20200719.R
+import kr.co.tjoeun.daily10minute_20200719.ViewProofDetailActvitiy
 import kr.co.tjoeun.daily10minute_20200719.datas.Project
 import kr.co.tjoeun.daily10minute_20200719.datas.Proof
 import kr.co.tjoeun.daily10minute_20200719.utils.ContextUtil
@@ -71,6 +73,19 @@ class ProofAdapter (val mContext: Context, resId: Int, val mList: List<Proof>)
         likeBtn.text = "좋아요 ${data.likeCount}개"
         replyBtn.text = "답글 ${data.replyCount}개"
 
+        if (data.myLike)
+        {
+            likeBtn.text = "좋아요 취소 ${data.likeCount}개"
+            likeBtn.setBackgroundResource(R.drawable.red_border_color)
+            likeBtn.setTextColor(mContext.resources.getColor(R.color.naverRed))
+        }
+        else
+        {
+            //좋아요를 안누를 경우도 별도로 처리해야 => 재 사용성에 의한 문제를 해결할수 있다.
+            likeBtn.setBackgroundResource(R.drawable.gray_border_box)
+            likeBtn.setTextColor(mContext.resources.getColor(R.color.black))
+        }
+
         likeBtn.setOnClickListener {
             ServerUtil.postRequestLikeProof(mContext, data.id, object : ServerUtil.JsonResponseHandler{
                 override fun onResponse(json: JSONObject) {
@@ -96,6 +111,13 @@ class ProofAdapter (val mContext: Context, resId: Int, val mList: List<Proof>)
                     }
                 }
             })
+        }
+
+        // 답글 버튼이 눌리면 => 답글 목록을 보는 화면으로 이동
+        replyBtn.setOnClickListener {
+            var myIntent = Intent(mContext, ViewProofDetailActvitiy :: class.java)
+            myIntent.putExtra("proof_id", data.id)
+            mContext.startActivity(myIntent)
         }
 
         return row

@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import kr.co.tjoeun.daily10minute_20200719.R
 import kr.co.tjoeun.daily10minute_20200719.datas.Project
 
-class ProjectApdaters (val mContext: Context, resId: Int, val mList: List<Project>)
+class ProjectApdater (val mContext: Context, resId: Int, val mList: List<Project>)
     : ArrayAdapter<Project>(mContext, resId, mList)
 {
     val inf = LayoutInflater.from(mContext)

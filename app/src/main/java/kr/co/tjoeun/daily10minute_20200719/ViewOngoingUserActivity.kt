@@ -1,15 +1,8 @@
 package kr.co.tjoeun.daily10minute_20200719
 
-import android.content.DialogInterface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
-import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_view_ongoing_user.*
-import kotlinx.android.synthetic.main.activity_view_project_detail.*
-import kr.co.tjoeun.daily10minute_20200719.apdaters.ProjectApdaters
-import kr.co.tjoeun.daily10minute_20200719.apdaters.UsersApdaters
+import kr.co.tjoeun.daily10minute_20200719.apdaters.UsersApdater
 import kr.co.tjoeun.daily10minute_20200719.datas.Project
 import kr.co.tjoeun.daily10minute_20200719.datas.Users
 import kr.co.tjoeun.daily10minute_20200719.utils.ServerUtil
@@ -21,7 +14,7 @@ class ViewOngoingUserActivity : BaseActivity() {
     lateinit var mProject: Project
 
     val mOngogingUserList = ArrayList<Users>()
-    lateinit var mUsersApdater : UsersApdaters
+    lateinit var mUsersApdater : UsersApdater
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +28,7 @@ class ViewOngoingUserActivity : BaseActivity() {
         getOngoingUsersFromServer()
 
         //서버에서 받아오고 난후에 어댑터 연결
-        mUsersApdater = UsersApdaters(mContext, R.layout.ongoing_user_list_item, mOngogingUserList)
+        mUsersApdater = UsersApdater(mContext, R.layout.ongoing_user_list_item, mOngogingUserList)
         userListView.adapter = mUsersApdater
 
     }
@@ -74,7 +67,7 @@ class ViewOngoingUserActivity : BaseActivity() {
 
                 runOnUiThread {
                     titleTxt.text = mProject.title
-                    usercountTxt.text = "참여중 ${mProject.completeDays} 명"
+                    usercountTxt.text = "참여중 ${mProject.onGoingUserCount} 명"
                     mUsersApdater.notifyDataSetChanged()
                 }
             }
